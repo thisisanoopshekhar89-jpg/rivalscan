@@ -1,0 +1,11 @@
+*.pdf
+*.txt
+.env
+__pycache__/
+*.pyc
+venv/
+rivalscan_core.py
+rivalscan_pdf.py
+rivalscan_social.py
+rivalscan_ultimate.py
+rivalscan_deep.py
