@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RivalScan.ai — Free Competitive Intelligence Report</title>
+<meta name="description" content="Enter two competitor URLs. Get a 28-module AI intelligence report free. Tech stack, ads, SEO, hiring, app reviews and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080810;--bg2:#0d0d1c;--bg3:#111128;--accent:#00ff88;--accent2:#00cc6a;--red:#ff3d6e;--blue:#4d9eff;--orange:#ff9500;--white:#fff;--text:#c8c8d8;--muted:#666680;--border:rgba(255,255,255,.07);--card:rgba(255,255,255,.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(8,8,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--white);text-decoration:none}
+.logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-link{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
+.nav-link:hover{color:var(--white)}
+.nav-badge{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--accent);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;z-index:1}
+.hero-glow{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(0,255,136,.05) 0%,transparent 70%);pointer-events:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.free-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--accent);font-size:13px;font-weight:600;padding:8px 18px;border-radius:100px;margin-bottom:28px;animation:fadeUp .5s ease both}
+.pulse-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+
+h1{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,82px);font-weight:800;line-height:1;letter-spacing:-2.5px;color:var(--white);max-width:860px;animation:fadeUp .5s .1s ease both}
+h1 .ac{color:var(--accent)} h1 .dm{color:var(--muted)}
+.hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--text);max-width:560px;margin:20px auto 0;line-height:1.6;font-weight:300;animation:fadeUp .5s .15s ease both}
+
+/* FREE CALLOUT */
+.free-callout{display:flex;align-items:center;gap:32px;background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.15);border-radius:16px;padding:20px 32px;margin:32px auto;max-width:600px;animation:fadeUp .5s .2s ease both;flex-wrap:wrap;justify-content:center}
+.fc-item{text-align:center}
+.fc-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent);display:block;line-height:1}
+.fc-label{font-size:12px;color:var(--muted);margin-top:3px}
+.fc-div{width:1px;height:36px;background:rgba(0,255,136,.2)}
+
+/* FORM CARD */
+.form-card{width:100%;max-width:620px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:36px;animation:fadeUp .5s .25s ease both;text-align:left}
+.form-step{display:none}
+.form-step.active{display:block}
+
+/* Step dots */
+.step-indicator{display:flex;align-items:center;gap:0;margin-bottom:28px}
+.step-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .3s}
+.step-dot.active{border-color:var(--accent);background:var(--accent);color:#000}
+.step-dot.done{border-color:var(--accent);background:rgba(0,255,136,.1);color:var(--accent)}
+.step-line{flex:1;height:1px;background:var(--border);margin:0 8px;transition:background .3s}
+.step-line.done{background:var(--accent)}
+.step-wrap{text-align:center}
+.step-lbl{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap}
+
+.form-title{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:6px;letter-spacing:-.5px}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:22px}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);margin-bottom:8px;text-transform:uppercase}
+.field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:13px 15px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus{border-color:rgba(0,255,136,.4);box-shadow:0 0 0 3px rgba(0,255,136,.06)}
+.field input::placeholder{color:var(--muted)}
+.field input.err{border-color:rgba(255,61,110,.4)}
+
+.url-row{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:4px 4px 4px 14px;transition:border-color .2s,box-shadow .2s;margin-bottom:10px}
+.url-row:focus-within{border-color:rgba(0,255,136,.4);box-shadow:0 0 0 3px rgba(0,255,136,.06)}
+.url-tag{font-size:11px;font-weight:700;letter-spacing:.4px;padding:5px 11px;border-radius:6px;white-space:nowrap}
+.yt{background:rgba(0,255,136,.1);color:var(--accent)}
+.ct{background:rgba(255,61,110,.1);color:var(--red)}
+.url-row input{flex:1;background:transparent;border:none;outline:none;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 0}
+.url-row input::placeholder{color:var(--muted)}
+
+.submit-btn{width:100%;padding:16px;background:var(--accent);color:#000;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:-.3px;margin-top:8px}
+.submit-btn:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 10px 32px rgba(0,255,136,.2)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.err-msg{font-size:13px;color:var(--red);margin-top:8px;display:none}
+.err-msg.show{display:block}
+.consent{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.5;text-align:center}
+.consent a{color:var(--text);text-decoration:underline}
+
+.price-hint{background:rgba(255,149,0,.06);border:1px solid rgba(255,149,0,.15);border-radius:10px;padding:14px 18px;margin-top:14px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text);line-height:1.5}
+.price-hint strong{color:var(--orange)}
+
+/* SUCCESS */
+.success-wrap{text-align:center;padding:8px 0}
+.s-icon{font-size:52px;margin-bottom:18px}
+.s-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--white);margin-bottom:10px;letter-spacing:-.5px}
+.s-sub{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:20px}
+.submitted-urls{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px;margin:16px 0;text-align:left}
+.ud{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border)}
+.ud:last-child{border-bottom:none;padding-bottom:0}
+.ud span{color:var(--muted);min-width:75px;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding-top:2px}
+.ud strong{color:var(--white);word-break:break-all}
+.eta-bar{display:flex;align-items:center;gap:10px;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.15);border-radius:10px;padding:13px 16px;font-size:13px;color:var(--text)}
+.eta-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
+
+/* TICKER */
+.ticker-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;background:var(--bg2);position:relative;z-index:1}
+.ticker{display:flex;animation:ticker 45s linear infinite;width:max-content}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{display:flex;align-items:center;gap:12px;padding:0 32px;font-size:12px;color:var(--muted);white-space:nowrap}
+.ti strong{color:var(--text);font-weight:500}
+.ts{color:var(--accent);font-weight:700}
+
+/* STATS BAR */
+.stat-bar{display:flex;align-items:center;justify-content:center;gap:40px;padding:26px 48px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);position:relative;z-index:1;flex-wrap:wrap}
+.si{text-align:center}
+.sn{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--white);letter-spacing:-1px;display:block}
+.sn em{color:var(--accent);font-style:normal}
+.sl{font-size:12px;color:var(--muted);margin-top:3px}
+.sdv{width:1px;height:36px;background:var(--border)}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:80px 48px;max-width:1100px;margin:0 auto}
+.full-sec{max-width:100%!important;padding-left:0!important;padding-right:0!important}
+.inner{max-width:1100px;margin:0 auto;padding:0 48px}
+.slbl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h2{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-1.5px}
+h2 .dm{color:var(--muted)}
+.ssub{font-size:17px;color:var(--text);max-width:500px;margin-top:14px;font-weight:300;line-height:1.6}
+
+/* MODULES */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:48px}
+.mc{background:var(--bg2);padding:24px;transition:background .2s}
+.mc:hover{background:var(--bg3)}
+.mi{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px}
+.mn{font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--muted);margin-bottom:5px}
+.mt2{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:5px}
+.md{font-size:12px;color:var(--muted);line-height:1.5}
+.ib{background:rgba(77,158,255,.1)}.ig{background:rgba(0,255,136,.1)}.ir{background:rgba(255,61,110,.1)}.io{background:rgba(255,149,0,.1)}.ip{background:rgba(168,85,247,.1)}
+
+/* SAMPLE PREVIEW */
+.preview{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:48px}
+.prev-hdr{background:#0a0a18;padding:15px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.dots{display:flex;gap:5px}
+.dot{width:11px;height:11px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
+.ptitle{font-size:12px;color:var(--muted);font-family:monospace}
+.pb{display:grid;grid-template-columns:1fr 1fr}
+.pc{padding:22px;border-right:1px solid var(--border)}
+.pc:last-child{border-right:none}
+.pch{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.yc .pch{color:var(--accent)}.cc .pch{color:var(--red)}
+.pr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:12px}
+.pm{color:var(--muted)}.pv{color:var(--white);font-weight:500}
+.pv.g{color:var(--accent)}.pv.r{color:var(--red)}.pv.o{color:var(--orange)}
+
+/* PRICING */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;position:relative}
+.pcard.feat{border-color:var(--accent);background:rgba(0,255,136,.03)}
+.fbadge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;white-space:nowrap}
+.pname{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.pprice{font-family:'Syne',sans-serif;font-size:50px;font-weight:800;color:var(--white);line-height:1;letter-spacing:-2px;margin-bottom:5px}
+.pprice sup{font-size:22px;vertical-align:super;letter-spacing:0}
+.free-word{font-size:38px;color:var(--accent)}
+.pper{font-size:13px;color:var(--muted);margin-bottom:22px}
+.pfeats{list-style:none;margin-bottom:24px}
+.pfeats li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13px;color:var(--text);border-bottom:1px solid rgba(255,255,255,.04)}
+.pfeats li:last-child{border-bottom:none}
+.pfeats li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px}
+.pbtn{display:block;width:100%;padding:13px;border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;text-align:center;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
+.bp{background:var(--accent);color:#000}.bp:hover{background:var(--accent2);transform:translateY(-1px)}
+.bo{background:transparent;border:1px solid var(--border);color:var(--white)}.bo:hover{border-color:rgba(255,255,255,.2);background:var(--card)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;flex-wrap:wrap;gap:16px}
+.flogo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:var(--white)}
+.flogo span{color:var(--accent)}
+.flinks{display:flex;gap:24px;list-style:none}
+.flinks a{color:var(--muted);text-decoration:none;font-size:13px;transition:color .2s}
+.flinks a:hover{color:var(--white)}
+.fcopy{font-size:12px;color:var(--muted)}
+
+/* ANIM */
+.fu{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
+.fu.vis{opacity:1;transform:translateY(0)}
+.spinner{width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite}
+
+@media(max-width:800px){
+  nav{padding:14px 20px}
+  .nav-right .nav-link{display:none}
+  section{padding:60px 20px}
+  .inner{padding:60px 20px}
+  .pb{grid-template-columns:1fr}
+  .pc{border-right:none;border-bottom:1px solid var(--border)}
+  .pc:last-child{border-bottom:none}
+  .pgrid{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+  .flinks{justify-content:center}
+  .stat-bar{gap:20px}
+  .sdv{display:none}
+  .free-callout{gap:20px}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Rival<span>Scan</span>.ai</a>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">How It Works</a>
+    <a href="#modules" class="nav-link">28 Modules</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="https://github.com/thisisanoopshekhar89-jpg/rivalscan" target="_blank" class="nav-link">GitHub ⭐</a>
+    <span class="nav-badge">First Report Free</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="free-badge"><span class="pulse-dot"></span>Your first report is completely free</div>
+  <h1>Know everything about<br>your <span class="ac">competitor</span><br><span class="dm">starting now</span></h1>
+  <p class="hero-sub">28 intelligence modules. Tech stack, ads, SEO, app reviews, Reddit sentiment, pricing, hiring signals — one PDF in 10 minutes.</p>
+
+  <div class="free-callout">
+    <div class="fc-item"><span class="fc-num">FREE</span><div class="fc-label">First Report</div></div>
+    <div class="fc-div"></div>
+    <div class="fc-item"><span class="fc-num">28</span><div class="fc-label">Intel Modules</div></div>
+    <div class="fc-div"></div>
+    <div class="fc-item"><span class="fc-num">10m</span><div class="fc-label">To Your Inbox</div></div>
+    <div class="fc-div"></div>
+    <div class="fc-item"><span class="fc-num">$29</span><div class="fc-label">After First</div></div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step-wrap"><div class="step-dot active" id="dot1">1</div><div class="step-lbl">Email</div></div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-wrap"><div class="step-dot" id="dot2">2</div><div class="step-lbl">URLs</div></div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-wrap"><div class="step-dot" id="dot3">3</div><div class="step-lbl">Done</div></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="form-step active" id="step1">
+      <div class="form-title">Get your free report</div>
+      <div class="form-sub">Enter your email — we'll send the PDF directly to you.</div>
+      <div class="field">
+        <label>Your Email Address</label>
+        <input type="email" id="emailInput" placeholder="you@company.com" autocomplete="email">
+        <div class="err-msg" id="emailErr">Please enter a valid email address</div>
+      </div>
+      <div class="field">
+        <label>Your Name (optional)</label>
+        <input type="text" id="nameInput" placeholder="Your name">
+      </div>
+      <button class="submit-btn" onclick="goStep2()">
+        Continue — Enter URLs
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <p class="consent">No spam. Report + occasional product updates only.<br><a href="#">Privacy Policy</a></p>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="form-step" id="step2">
+      <div class="form-title">Enter the two websites</div>
+      <div class="form-sub">Enter any two companies. Any industry, any country.</div>
+      <label style="display:block;font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);margin-bottom:10px;text-transform:uppercase">Websites to compare</label>
+      <div class="url-row">
+        <span class="url-tag yt">COMPANY #1</span>
+        <input type="url" id="myUrl" placeholder="https://company1.com">
+      </div>
+      <div class="url-row">
+        <span class="url-tag ct">COMPANY #2</span>
+        <input type="url" id="compUrl" placeholder="https://company2.com">
+      </div>
+      <div class="err-msg" id="urlErr">Please enter both URLs starting with https://</div>
+      <button class="submit-btn" onclick="submitReport()" id="submitBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6m-3-3v6M3 12a9 9 0 1018 0 9 9 0 00-18 0z"/></svg>
+        Generate My Free Report
+      </button>
+      <div class="price-hint">
+        <span style="font-size:20px">🎁</span>
+        <span>This report is <strong>completely free</strong>. After your first, additional reports are just <strong>$29 each</strong>.</span>
+      </div>
+      <p class="consent" style="margin-top:12px">Delivered to <span id="emailShow" style="color:var(--text)"></span> within 10 minutes.</p>
+    </div>
+
+    <!-- STEP 3 SUCCESS -->
+    <div class="form-step" id="step3">
+      <div class="success-wrap">
+        <div class="s-icon">🚀</div>
+        <div class="s-title">Report is generating!</div>
+        <div class="s-sub">We're running all 28 intelligence modules. Your PDF will arrive by email within 10 minutes.</div>
+        <div class="submitted-urls" id="subUrls"></div>
+        <div class="eta-bar" style="margin:16px 0">
+          <span class="eta-dot"></span>
+          <span>Estimated: <strong style="color:var(--white)">under 10 minutes</strong> to your inbox</span>
+        </div>
+        <div class="price-hint">
+          <span style="font-size:20px">⭐</span>
+          <span>Loved it? Additional reports are just <strong>$29</strong>. <a href="#pricing" style="color:var(--orange)">See pricing →</a></span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:18px">
+          <a href="https://github.com/thisisanoopshekhar89-jpg/rivalscan" target="_blank" style="color:var(--accent)">⭐ Star on GitHub</a>
+          &nbsp;·&nbsp;
+          <a href="#" onclick="resetForm();return false" style="color:var(--muted)">Run another report</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ti"><span class="ts">✦</span><strong>Tech Stack</strong> — 50+ tools</div>
+    <div class="ti"><span class="ts">✦</span><strong>GTM Deep Scan</strong> — hidden tools</div>
+    <div class="ti"><span class="ts">✦</span><strong>Hunter.io</strong> — verified emails</div>
+    <div class="ti"><span class="ts">✦</span><strong>Facebook Ad Library</strong> — every ad</div>
+    <div class="ti"><span class="ts">✦</span><strong>App Store</strong> — reviews + complaints</div>
+    <div class="ti"><span class="ts">✦</span><strong>Reddit Sentiment</strong> — brand perception</div>
+    <div class="ti"><span class="ts">✦</span><strong>SEO Score</strong> — A to F grade</div>
+    <div class="ti"><span class="ts">✦</span><strong>Pricing Intel</strong> — plans + fees</div>
+    <div class="ti"><span class="ts">✦</span><strong>Hiring Signals</strong> — 6-month roadmap</div>
+    <div class="ti"><span class="ts">✦</span><strong>Geographic Expansion</strong> — 500+ cities</div>
+    <div class="ti"><span class="ts">✦</span><strong>Tech Stack</strong> — 50+ tools</div>
+    <div class="ti"><span class="ts">✦</span><strong>GTM Deep Scan</strong> — hidden tools</div>
+    <div class="ti"><span class="ts">✦</span><strong>Hunter.io</strong> — verified emails</div>
+    <div class="ti"><span class="ts">✦</span><strong>Facebook Ad Library</strong> — every ad</div>
+    <div class="ti"><span class="ts">✦</span><strong>App Store</strong> — reviews + complaints</div>
+    <div class="ti"><span class="ts">✦</span><strong>Reddit Sentiment</strong> — brand perception</div>
+    <div class="ti"><span class="ts">✦</span><strong>SEO Score</strong> — A to F grade</div>
+    <div class="ti"><span class="ts">✦</span><strong>Pricing Intel</strong> — plans + fees</div>
+    <div class="ti"><span class="ts">✦</span><strong>Hiring Signals</strong> — 6-month roadmap</div>
+    <div class="ti"><span class="ts">✦</span><strong>Geographic Expansion</strong> — 500+ cities</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stat-bar">
+  <div class="si"><span class="sn">28<em>+</em></span><div class="sl">Intelligence Modules</div></div>
+  <div class="sdv"></div>
+  <div class="si"><span class="sn"><em>FREE</em></span><div class="sl">First Report</div></div>
+  <div class="sdv"></div>
+  <div class="si"><span class="sn">$29</span><div class="sl">Per Report After</div></div>
+  <div class="sdv"></div>
+  <div class="si"><span class="sn">10<em>m</em></span><div class="sl">To Your Inbox</div></div>
+  <div class="sdv"></div>
+  <div class="si"><span class="sn">100<em>%</em></span><div class="sl">Public Data Only</div></div>
+</div>
+
+<!-- SAMPLE -->
+<section id="sample">
+  <p class="slbl fu">Real Output</p>
+  <h2 class="fu">What's inside <span class="dm">your report</span></h2>
+  <p class="ssub fu">Example output — Acme Insurance vs CompareQuick</p>
+  <div class="preview fu">
+    <div class="prev-hdr">
+      <div class="dots"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div>
+      <span class="ptitle">rivalscan_MASTER_report.pdf — Executive Intelligence Dashboard</span>
+    </div>
+    <div class="pb">
+      <div class="pc yc">
+        <div class="pch">COMPANY #1 — Acme Insurance</div>
+        <div class="pr"><span class="pm">CEO</span><span class="pv">Sarah Mitchell</span></div>
+        <div class="pr"><span class="pm">SEO Score</span><span class="pv g">77/100 — Grade B</span></div>
+        <div class="pr"><span class="pm">Google Indexed</span><span class="pv o">3 pages</span></div>
+        <div class="pr"><span class="pm">LinkedIn</span><span class="pv g">44,760 followers</span></div>
+        <div class="pr"><span class="pm">iOS + Android</span><span class="pv g">Both apps ✓</span></div>
+        <div class="pr"><span class="pm">WhatsApp Business</span><span class="pv g">Active ✓</span></div>
+        <div class="pr"><span class="pm">Review Rating</span><span class="pv g">4.8/5 — 29,000</span></div>
+        <div class="pr"><span class="pm">GTM Hidden Tools</span><span class="pv">GA4 + WhatsApp</span></div>
+        <div class="pr"><span class="pm">Google Ads</span><span class="pv o">Not detected</span></div>
+        <div class="pr"><span class="pm">Domain Age</span><span class="pv g">18 years (2006)</span></div>
+      </div>
+      <div class="pc cc">
+        <div class="pch">COMPANY #2 — CompareQuick</div>
+        <div class="pr"><span class="pm">CEO</span><span class="pv o">Not public</span></div>
+        <div class="pr"><span class="pm">SEO Score</span><span class="pv o">63/100 — Grade C</span></div>
+        <div class="pr"><span class="pm">Google Indexed</span><span class="pv g">3,751 pages</span></div>
+        <div class="pr"><span class="pm">LinkedIn</span><span class="pv r">12,978 followers</span></div>
+        <div class="pr"><span class="pm">iOS + Android</span><span class="pv r">Neither ✗</span></div>
+        <div class="pr"><span class="pm">WhatsApp Business</span><span class="pv r">Not detected ✗</span></div>
+        <div class="pr"><span class="pm">Review Rating</span><span class="pv">4.6/5 — 535,368</span></div>
+        <div class="pr"><span class="pm">GTM Hidden Tools</span><span class="pv r">GA4 + Ads Remarketing</span></div>
+        <div class="pr"><span class="pm">Google Ads</span><span class="pv r">Active — retargeting</span></div>
+        <div class="pr"><span class="pm">Domain Age</span><span class="pv r">3 years (2021)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="full-sec" style="background:var(--bg2);padding:80px 0">
+  <div class="inner">
+    <p class="slbl fu">Process</p>
+    <h2 class="fu">Four steps. <span class="dm">Ten minutes.</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;position:relative" class="fu">
+      <div style="position:absolute;top:28px;left:10%;right:10%;height:1px;background:var(--border)"></div>
+      <div style="text-align:center;padding:0 16px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--bg3);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--accent);margin:0 auto 18px;position:relative;z-index:1">1</div>
+        <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px">Enter Email</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">We capture your email to deliver the PDF report.</div>
+      </div>
+      <div style="text-align:center;padding:0 16px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--bg3);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--accent);margin:0 auto 18px;position:relative;z-index:1">2</div>
+        <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px">Enter Two URLs</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">Enter any two companies. We compare them head to head.</div>
+      </div>
+      <div style="text-align:center;padding:0 16px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--bg3);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--accent);margin:0 auto 18px;position:relative;z-index:1">3</div>
+        <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px">28 Modules Run</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">AI scans tech, ads, SEO, social, news, apps and more.</div>
+      </div>
+      <div style="text-align:center;padding:0 16px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--bg3);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--accent);margin:0 auto 18px;position:relative;z-index:1">4</div>
+        <div style="font-family:Syne,sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px">PDF in Inbox</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">30-page report delivered to your email in 10 minutes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="modules">
+  <p class="slbl fu">Coverage</p>
+  <h2 class="fu">28 modules. <span class="dm">Zero blind spots.</span></h2>
+  <div class="mgrid fu">
+    <div class="mc"><div class="mi ib">🔧</div><div class="mn">01–03</div><div class="mt2">Tech Stack + GTM</div><div class="md">50+ tools. Hidden tools inside GTM revealed.</div></div>
+    <div class="mc"><div class="mi ig">📧</div><div class="mn">04–05</div><div class="mt2">Contacts + Leadership</div><div class="md">Hunter.io verified emails + CEO, sales contacts.</div></div>
+    <div class="mc"><div class="mi io">💼</div><div class="mn">06</div><div class="mt2">Hiring Intelligence</div><div class="md">Predicts 6-month roadmap from job postings.</div></div>
+    <div class="mc"><div class="mi ib">📝</div><div class="mn">07</div><div class="mt2">Blog + Content</div><div class="md">20+ paths + subdomain scan. Content gaps found.</div></div>
+    <div class="mc"><div class="mi ip">📱</div><div class="mn">08–11</div><div class="mt2">Social Media</div><div class="md">LinkedIn, YouTube, Facebook, Twitter real counts.</div></div>
+    <div class="mc"><div class="mi ig">📰</div><div class="mn">12</div><div class="mt2">News + PR</div><div class="md">Domain-filtered. Funding, M&A, negative press.</div></div>
+    <div class="mc"><div class="mi ib">🔍</div><div class="mn">13–16</div><div class="mt2">SEO Intelligence</div><div class="md">Google indexed count, landing pages, A–F grade.</div></div>
+    <div class="mc"><div class="mi io">📢</div><div class="mn">22–24</div><div class="mt2">Ad Intelligence</div><div class="md">Facebook Ads, Google Ads, Maps, Knowledge Panel.</div></div>
+    <div class="mc"><div class="mi ir">📲</div><div class="mn">25</div><div class="mt2">App Store</div><div class="md">iOS + Android ratings, reviews, top complaints.</div></div>
+    <div class="mc"><div class="mi ip">💬</div><div class="mn">26</div><div class="mt2">Reddit Sentiment</div><div class="md">Real customer opinions. Sentiment scored.</div></div>
+    <div class="mc"><div class="mi io">💰</div><div class="mn">27</div><div class="mt2">Pricing Intel</div><div class="md">Plans, fees, commissions, offers, memberships.</div></div>
+    <div class="mc"><div class="mi ig">🗺️</div><div class="mn">28</div><div class="mt2">Geography + Product</div><div class="md">500+ cities tracked. Features. Expansion signals.</div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="full-sec" style="background:var(--bg2);padding:80px 0">
+  <div class="inner">
+    <p class="slbl fu">Simple Pricing</p>
+    <h2 class="fu">First one free. <span class="dm">Then $29.</span></h2>
+    <p class="ssub fu">No subscription. No monthly fee. Pay only when you need a report.</p>
+    <div class="pgrid fu">
+      <div class="pcard feat">
+        <div class="fbadge">YOUR FIRST REPORT</div>
+        <div class="pname">Free Report</div>
+        <div class="pprice"><span class="free-word">FREE</span></div>
+        <div class="pper">no credit card required</div>
+        <ul class="pfeats">
+          <li>All 28 intelligence modules</li>
+          <li>App Store + Reddit sentiment</li>
+          <li>Facebook + Google Ads</li>
+          <li>Verified emails via Hunter.io</li>
+          <li>30-day AI battle plan</li>
+          <li>PDF delivered to email</li>
+        </ul>
+        <a href="#" class="pbtn bp" onclick="scrollTop();return false">Get Free Report →</a>
+      </div>
+      <div class="pcard">
+        <div class="pname">Additional Reports</div>
+        <div class="pprice"><sup>$</sup>29</div>
+        <div class="pper">per report after your first</div>
+        <ul class="pfeats">
+          <li>Everything in free report</li>
+          <li>Any two websites</li>
+          <li>Any industry worldwide</li>
+          <li>Fresh data every report</li>
+          <li>Share with entire team</li>
+          <li>No subscription needed</li>
+        </ul>
+        <a href="#" class="pbtn bo" onclick="scrollTop();return false">Start Free First →</a>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:20px">
+      Agency or bulk reports? <a href="mailto:hello@rivalscan.ai" style="color:var(--text)">Contact us</a>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">Rival<span>Scan</span>.ai</div>
+  <ul class="flinks">
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="https://github.com/thisisanoopshekhar89-jpg/rivalscan" target="_blank">GitHub</a></li>
+    <li><a href="mailto:hello@rivalscan.ai">Contact</a></li>
+  </ul>
+  <div class="fcopy">© 2026 RivalScan.ai — All data from public sources</div>
+</footer>
+
+<script>
+// Scroll animations
+const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:.1});
+document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+
+function scrollTop(){document.querySelector('.hero').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('emailInput').focus(),500)}
+
+// STEP 1 → STEP 2
+function goStep2(){
+  const email=document.getElementById('emailInput').value.trim();
+  const err=document.getElementById('emailErr');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    err.classList.add('show');
+    document.getElementById('emailInput').classList.add('err');
+    return;
+  }
+  err.classList.remove('show');
+  document.getElementById('emailInput').classList.remove('err');
+  // Update dots
+  const d1=document.getElementById('dot1');
+  d1.classList.remove('active');d1.classList.add('done');d1.innerHTML='✓';
+  document.getElementById('line1').classList.add('done');
+  document.getElementById('dot2').classList.add('active');
+  document.getElementById('emailShow').textContent=email;
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+}
+
+// ── FOUNDER BYPASS — unlimited free reports ──────────────
+const FOUNDER_EMAILS = [
+  'thisisanoopshekhar89@gmail.com'
+];
+function isFounder(e){ return FOUNDER_EMAILS.map(x=>x.toLowerCase()).includes(e.toLowerCase()); }
+
+// STEP 2 → STEP 3 (SUBMIT)
+function submitReport(){
+  const my=document.getElementById('myUrl').value.trim();
+  const comp=document.getElementById('compUrl').value.trim();
+  const err=document.getElementById('urlErr');
+  const btn=document.getElementById('submitBtn');
+  if(!my||!comp||!my.startsWith('http')||!comp.startsWith('http')){
+    err.classList.add('show');return;
+  }
+  err.classList.remove('show');
+  btn.disabled=true;
+  btn.innerHTML='<div class="spinner"></div> Submitting...';
+
+  const email=document.getElementById('emailInput').value.trim();
+  const name=document.getElementById('nameInput').value.trim();
+
+  // Save locally always
+  const reqs=JSON.parse(localStorage.getItem('rs_requests')||'[]');
+  reqs.push({email,name,my,comp,ts:new Date().toISOString()});
+  localStorage.setItem('rs_requests',JSON.stringify(reqs));
+
+  // Send to Formspree — get free account at formspree.io
+  // Replace xpwzgkna with your actual Formspree form ID
+  fetch('https://formspree.io/f/xpwzgkna',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      email,name:name||'Not provided',
+      _subject: isFounder(email) ? `[FOUNDER] ${email}` : `New RivalScan Request — ${email}`,
+      company_1:my,
+      company_2:comp,
+      founder_account: isFounder(email) ? 'YES - UNLIMITED' : 'No',
+      message:`${isFounder(email)?'[FOUNDER - UNLIMITED FREE]\n':''}Run rivalscan_master.py:\nYOUR URL: ${my}\nCOMPANY #2: ${comp}\nSend PDF to: ${email}`
+    })
+  })
+  .then(()=>showSuccess(email,my,comp,isFounder(email)))
+  .catch(()=>showSuccess(email,my,comp,isFounder(email)));
+}
+
+function showSuccess(email,my,comp,founder){
+  const d2=document.getElementById('dot2');
+  d2.classList.remove('active');d2.classList.add('done');d2.innerHTML='✓';
+  document.getElementById('line2').classList.add('done');
+  const d3=document.getElementById('dot3');
+  d3.classList.add('active','done');d3.innerHTML='✓';
+
+  const founderBadge = founder
+    ? `<div style="background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#00ff88;font-weight:600;text-align:center">Founder account — unlimited reports active</div>`
+    : '';
+  document.getElementById('subUrls').innerHTML=founderBadge+`
+    <div class="ud"><span>Your Site</span><strong>${my}</strong></div>
+    <div class="ud"><span>Competitor</span><strong>${comp}</strong></div>
+    <div class="ud"><span>Send To</span><strong>${email}</strong></div>
+  `;
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step3').classList.add('active');
+}
+
+function resetForm(){
+  ['step1','step2','step3'].forEach(id=>{document.getElementById(id).classList.remove('active')});
+  document.getElementById('step1').classList.add('active');
+  ['dot1','dot2','dot3'].forEach((id,i)=>{
+    const d=document.getElementById(id);
+    d.className='step-dot';d.innerHTML=i+1;
+    if(i===0)d.classList.add('active');
+  });
+  ['line1','line2'].forEach(id=>document.getElementById(id).classList.remove('done'));
+  document.getElementById('emailInput').value='';
+  document.getElementById('myUrl').value='';
+  document.getElementById('compUrl').value='';
+}
+
+// Enter key
+document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')goStep2()});
+</script>
+</body>
+</html>
