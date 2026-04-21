@@ -444,21 +444,34 @@ function submitReport(){
   const email   = document.getElementById('emailInput').value.trim();
   const founder = isFounder(email);
 
-  // Save to Google Sheet
-  fetch(SHEET_URL, {
-    method: 'POST',
-    mode:   'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({
-      email,
-      company1: c1,
-      company2: c2,
-      founder:  founder ? 'YES' : 'No'
-    })
-  }).catch(()=>{});
+  // Submit via hidden form — bypasses CORS completely
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = SHEET_URL;
+  form.target = 'hidden_iframe';
+  form.style.display = 'none';
 
-  // Always show success after short delay
-  setTimeout(()=>showSuccess(email, c1, c2, founder), 1200);
+  var fields = {
+    email:    email,
+    company1: c1,
+    company2: c2,
+    founder:  founder ? 'YES' : 'No'
+  };
+
+  Object.keys(fields).forEach(function(key) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = fields[key];
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+
+  // Show success immediately
+  setTimeout(()=>showSuccess(email, c1, c2, founder), 800);
 }
 
 function showSuccess(email, c1, c2, founder){
@@ -500,5 +513,6 @@ function resetForm(){
 // Enter key support
 document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')goStep2()});
 </script>
+<iframe name=hidden_iframe style=display:none></iframe>
 </body>
 </html>
