@@ -444,33 +444,23 @@ function submitReport(){
   const email   = document.getElementById('emailInput').value.trim();
   const founder = isFounder(email);
 
-  // Submit via hidden form — bypasses CORS completely
-  var form = document.createElement('form');
-  form.method = 'POST';
-  form.action = SHEET_URL;
-  form.target = 'hidden_iframe';
-  form.style.display = 'none';
-
-  var fields = {
+  // GET request — guaranteed no CORS issues
+  var params = new URLSearchParams({
     email:    email,
     company1: c1,
     company2: c2,
     founder:  founder ? 'YES' : 'No'
-  };
-
-  Object.keys(fields).forEach(function(key) {
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = key;
-    input.value = fields[key];
-    form.appendChild(input);
   });
+  var url = SHEET_URL + '?' + params.toString();
 
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
+  // Use image trick — zero CORS, always fires
+  var img = new Image();
+  img.src = url;
 
-  // Show success immediately
+  // Also try fetch as backup
+  fetch(url, {method:'GET', mode:'no-cors'}).catch(()=>{});
+
+  // Show success
   setTimeout(()=>showSuccess(email, c1, c2, founder), 800);
 }
 
